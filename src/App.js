@@ -15,25 +15,20 @@ const App = () => {
     person.name = persons.length + 1;
     setPersons([...persons, person]);
   };
-
-  const deletePerson = (name) => {
-    setPersons(persons.filter((person) => person.name !== name));
-  };
-
-  //   useEffect(() => {
-  //   fetch(PERSON_API_URL)
-  //     .then(response => response.json())
-  //     .then(jsonResponse => {
-  //       setPersons(jsonResponse.results);
-  //       setLoading(false);
-  //     });
-  // }, []);
+    useEffect(() => {
+    fetch(PERSON_API_URL)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        setPersons(jsonResponse.results);
+        setLoading(false);
+      });
+  }, []);
 
   const search = (searchValue) => {
     setLoading(true);
     setErrorMessage(null);
 
-    fetch(`https://swapi.dev/api/people/?search=${searchValue}`)
+    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
       .then((response) => response.json())
       .then((jsonResponse) => {
         if (jsonResponse.Response === 'True') {
@@ -49,7 +44,7 @@ const App = () => {
   return (
     <div className='App'>
       <Search search={search} />
-      <PersonTable persons={persons} deletePerson={deletePerson} />
+      <PersonTable persons={persons} />
       <AddPersonForm addPerson={addPerson} />
     </div>
   );

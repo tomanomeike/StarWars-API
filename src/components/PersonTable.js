@@ -3,10 +3,14 @@ import Person from './Person';
 
 const PERSON_API_URL = 'https://swapi.dev/api/people/';
 
-const PersonTable = (props) => {
+const PersonTable = () => {
   const [loading, setLoading] = useState(true);
   const [persons, setPersons] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const deletePerson = (name) => {
+    setPersons(persons.filter((person) => person.name !== name));
+  };
 
   useEffect(() => {
     fetch(PERSON_API_URL)
@@ -17,7 +21,8 @@ const PersonTable = (props) => {
       });
   }, []);
   return (
-    <table>
+    <React.Fragment>
+ <table>
       <thead>
         <tr>
           <th>Firstname</th>
@@ -33,10 +38,25 @@ const PersonTable = (props) => {
         <div className='errorMessage'>{errorMessage}</div>
       ) : (
         persons.map((person, index) => (
-          <Person key={`${index}-${person.name}`} person={person}/>
+          <tbody>
+            {/* <Person key={`${index}-${person.name}`} person={person} /> */}
+
+            <tr>
+              <td>{person.name}</td>
+              <td>{person.birth_year}</td>
+              <td>{person.gender}</td>
+              <td>
+                <button onClick={() => deletePerson(person.name)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+            </tbody>
         ))
       )}
     </table>
+    </React.Fragment>
+   
   );
 };
 
