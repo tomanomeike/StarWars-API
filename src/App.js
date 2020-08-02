@@ -6,19 +6,21 @@ import AddPersonForm from './components/AddPersonForm';
 
 const PERSON_API_URL = 'https://swapi.dev/api/people/';
 
-const App = () => {
+const App = (props) => {
   const [loading, setLoading] = useState(true);
   const [persons, setPersons] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+ 
 
   const addPerson = (person) => {
-    person.name = persons.length + 1;
-    setPersons([...persons, person]);
+   setPersons([...persons, person]);
+    console.log(persons)
   };
-    useEffect(() => {
+
+  useEffect(() => {
     fetch(PERSON_API_URL)
-      .then(response => response.json())
-      .then(jsonResponse => {
+      .then((response) => response.json())
+      .then((jsonResponse) => {
         setPersons(jsonResponse.results);
         setLoading(false);
       });
@@ -28,7 +30,7 @@ const App = () => {
     setLoading(true);
     setErrorMessage(null);
 
-    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+    fetch(`https://swapi.dev/api/people/?search=${searchValue}`)
       .then((response) => response.json())
       .then((jsonResponse) => {
         if (jsonResponse.Response === 'True') {
@@ -44,7 +46,7 @@ const App = () => {
   return (
     <div className='App'>
       <Search search={search} />
-      <PersonTable persons={persons} />
+      <PersonTable persons={persons}/>
       <AddPersonForm addPerson={addPerson} />
     </div>
   );

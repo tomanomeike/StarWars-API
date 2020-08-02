@@ -22,41 +22,43 @@ const PersonTable = () => {
   }, []);
   return (
     <React.Fragment>
- <table>
-      <thead>
-        <tr>
-          <th>Firstname</th>
-          <th>Birth date</th>
-          <th>Gender</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+      <table>
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Birth date</th>
+            <th>Gender</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-      {loading && !errorMessage ? (
-        <span>loading...</span>
-      ) : errorMessage ? (
-        <div className='errorMessage'>{errorMessage}</div>
-      ) : (
-        persons.map((person, index) => (
-          <tbody>
-            {/* <Person key={`${index}-${person.name}`} person={person} /> */}
+        {loading && !errorMessage ? (
+          <span>loading...</span>
+        ) : errorMessage ? (
+          <div className='errorMessage'>{errorMessage}</div>
+        ) : (
+          persons.map((person, index) => (
+            <tbody key={`${index}-${person.name}`}>
+              {/* <Person key={`${index}-${person.name}`} person={person} /> */}
 
-            <tr>
-              <td>{person.name}</td>
-              <td>{person.birth_year}</td>
-              <td>{person.gender}</td>
-              <td>
-                <button onClick={() => deletePerson(person.name)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
+              <tr>
+                <td>{person.name}</td>
+                <td>{person.birth_year}</td>
+                <td>{person.gender}</td>
+                <td>
+                  <button
+                    className='btn-delete'
+                    onClick={() => deletePerson(person.name)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
             </tbody>
-        ))
-      )}
-    </table>
+          ))
+        )}
+      </table>
     </React.Fragment>
-   
   );
 };
 

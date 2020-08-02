@@ -8,20 +8,28 @@ const AddPersonForm = (props) => {
     const { name, value } = e.target;
     setPerson({
       ...person,
-      [name]: value,
+    [name]: value,
     });
-    console.log(value);
+    // console.log(person);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (person.name && person.birth_year && person.gender) {
-      handleChange(e, person.addPerson(person));
-    }
-  };
-
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (person.name && person.birth_year && person.gender) {
+  //     handleChange(e, person.addPerson(person));
+  //   }
+  // };
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!person.name || !person.birth_year || !person.gender) return;
+       
+        setPerson(initialFormState);
+        props.addPerson(person);
+      }}
+      
+    >
       <label>Name</label>
       <input
         className='u-full-width'
@@ -46,7 +54,7 @@ const AddPersonForm = (props) => {
         value={person.gender}
         onChange={handleChange}
       />
-      <button type='submit' className='button-primary' onClick={handleSubmit}>
+      <button type='submit' className='button-primary'>
         Add new
       </button>
     </form>
